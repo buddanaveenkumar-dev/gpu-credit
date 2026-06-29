@@ -206,3 +206,4 @@ Naveen Budda
 Co-Founder & CTO, KarmaLife 
 budda.naveen.kumar@gmail.com
 https://www.linkedin.com/in/naveenbudda
+"# gpu-credit" 
