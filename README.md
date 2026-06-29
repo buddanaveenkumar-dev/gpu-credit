@@ -28,12 +28,6 @@ Gig workers such as delivery partners, rideshare drivers, and platform contracto
 * Onboarding patterns
 * Merchant and account relationships
 
-Traditional credit infrastructure does not use these signals well.
-
-Most systems still depend on fixed salary, bureau history, and stable monthly income. That does not fit many gig workers. They may have thin or no bureau file, variable income, and non-traditional repayment patterns.
-
-The data exists. The bottleneck is compute at scale.
-
 At scale, a credit decisioning pipeline has to process millions of records, detect fraud across relationship graphs, score risk, apply policy rules, and return a decision in milliseconds.
 
 This POC shows how NVIDIA's stack can help across three parts of the pipeline:
