@@ -135,17 +135,15 @@ The explanation is produced at inference time, not reconstructed later.
 
 -----
 
-
 # Benchmark
-Run on Google Colab A100-SXM4-40GB. Metrics are from the notebook.
+Run on Google Colab A100-SXM4-40GB. Metrics are from actual notebook runs.
 
 | Stage | CPU | GPU (A100) | Speedup |
 |---|---:|---:|---:|
-| Feature engineering, 5M records | 274 ms | 186 ms | 1.5x |
+| Feature engineering (5M records) | 274 ms | 195 ms | 1.6× |
+| GPU XGBoost training (40K records) | — | 466 ms | Measured |
 
-This benchmark includes transferring data from pandas to cuDF. For this simple feature engineering workload, the transfer overhead dominates part of the runtime.
-
-The main learning is that GPU acceleration is not automatic. It becomes more valuable when data is already resident on GPU, transformations are more complex, or downstream GPU workloads such as graph analytics and model training are part of the same pipeline.
+The feature engineering benchmark includes pandas-to-cuDF transfer time. GPU acceleration becomes more valuable when data remains on GPU across feature engineering, graph analytics, model training, and inference.
 
 -----
 
@@ -170,19 +168,19 @@ The main learning is that GPU acceleration is not automatic. It becomes more val
 # Production Notes
 The implementation simple, but the architectural patterns are based on production credit decisioning systems.
 
-Policy layer separate from ML layer: 
+1. Policy layer separate from ML layer: 
 Credit rules are versioned independently from the scoring model. Risk teams can update lending policy without retraining or redeploying the scoring model.
 
-Fraud gate before credit gate:
+2. Fraud gate before credit gate
 GNN fraud screening runs first. Contaminated inputs such as synthetic identities and ring fraud participants are filtered before underwriting.
 
-Adverse action at inference time: 
+3. Adverse action at inference time: 
 Not generated post-hoc. Every decline produces a regulatory-ready explanation in the same inference call. Audit log written at decision time.
 
-Dynamic limits over static origination: 
+4. Dynamic limits over static origination: 
 Credit limit adjusts continuously with earnings velocity. Standard origination models assign a static limit and move on. Static origination limits are often too conservative for variable-income workers whose repayment capacity changes over time.
 
-Shared feature definitions across train and serve: 
+5. Shared feature definitions across train and serve: 
 Training and inference use identical feature generation logic. Reduces training and serving skew. No production system completely eliminates it.
 
 -----
@@ -202,8 +200,7 @@ https://colab.research.google.com/drive/1-uyzqaztGbVU3lLS2FnFQT8LWaM-nvjy?usp=sh
 
 
 # Author
-Naveen Budda
-Co-Founder & CTO, KarmaLife 
-budda.naveen.kumar@gmail.com
+Naveen Budda  
+Co-Founder & CTO, KarmaLife  
+budda.naveen.kumar@gmail.com  
 https://www.linkedin.com/in/naveenbudda
-"# gpu-credit" 
