@@ -168,7 +168,7 @@ The feature engineering benchmark includes pandas-to-cuDF transfer time. GPU acc
 # Production Notes
 The implementation simple, but the architectural patterns are based on production credit decisioning systems.
 
-1. Policy layer separate from ML layer: 
+1. Policy layer separate from ML layer
 Credit rules are versioned independently from the scoring model. Risk teams can update lending policy without retraining or redeploying the scoring model.
 
 2. Fraud gate before credit gate
